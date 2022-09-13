@@ -1,0 +1,242 @@
+/* =======================
+        RESPONSIVE NAVBAR
+========================= */
+@media screen and (max-width: 1500px) {
+    .container {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 1360px) {
+    .container {
+        padding: 0 10rem;
+    }
+
+    .navbar .logo a {
+        padding-left: 3rem;
+    }
+
+    .navbar .menu-items {
+        padding-right: 1.8rem;
+    }
+
+    #home {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+    }
+
+    #services {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    #pricing {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+    }
+
+    #support {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    #contact {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+    }
+
+    .image-side img {
+        padding-top: 2rem;
+    }
+
+    .text-side .title {
+        padding-top: 2rem;
+    }
+
+    #home {
+        padding-top: 5rem;
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    .container {
+        padding: 0 8rem;
+    }
+
+    .nav-toggler {
+        display: block;
+    }
+
+    .header {
+        position: fixed;
+        background: #fff;
+        min-height: 5rem;
+    }
+
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar .logo {
+        position: fixed;
+        top: 1.2rem;
+        left: 0;
+    }
+
+    .navbar .menu-items {
+        position: fixed;
+        margin-top: 5rem;
+        padding-top: 0.8rem;
+        width: 100%;
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transform: scaleY(0);
+        -ms-transform: scaleY(0);
+        transform: scaleY(0);
+        height: auto;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        background: #fff;
+        border-top: 1px solid #eee;
+        box-shadow: 0 1rem 2rem -2rem gray;
+        -webkit-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+        -webkit-transform-origin: top;
+        -ms-transform-origin: top;
+        transform-origin: top;
+    }
+
+    .navbar .menu-items.show {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+        -webkit-transform: scaleY(1);
+        -ms-transform: scaleY(1);
+        transform: scaleY(1);
+    }
+
+    .menu-items li a {
+        padding: 0.6rem 0;
+    }
+
+    .menu-items .explore-btn {
+        padding: 1rem 0 1.8rem 0;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .container {
+        padding: 0 6rem;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        padding: 0 4rem;
+    }
+}
+
+@media screen and (max-width: 840px) {
+    .container {
+        padding: 0 3rem;
+    }
+
+    .text-side .title h1 {
+        font-size: 2.4rem;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .container {
+        padding: 0 2rem;
+    }
+
+    .text-side .title h1 {
+        font-size: 2.4rem;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .text-side .title h1 {
+        font-size: 2rem;
+    }
+
+    .text-side .details p {
+        font-size: 1.1rem;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .navbar .logo {
+        top: 1.2rem;
+    }
+
+    .navbar .logo a {
+        padding-left: 1.4rem;
+        font-size: 1.6rem;
+    }
+}
+
+/* ===================== Footer ===================== */
+
+@media (max-width: 767px) {
+	.footer-col {
+		width: 50%;
+		margin-bottom: 30px;
+	}
+}
+@media (max-width: 574px) {
+	.footer-col {
+		width: 100%;
+	}
+} 
+
+/* ===================== Kontak ===================== */
+
+@media (max-width: 950px) {
+    .container-k {
+        width: 90%;
+        padding: 30px 40px 40px 35px;
+    }
+    .container-k .content .right-side {
+        width: 75%;
+        margin-left: 55px;
+    }
+}
+@media (max-width: 820px) {
+    .container-k {
+        margin: 40px 0;
+        height: 100%;
+    }
+    .container-k .content {
+        flex-direction: column-reverse;
+    }
+    .container-k .content .left-side {
+        width: 100%;
+        flex-direction: row;
+        margin-top: 40px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .container-k .content .left-side::before {
+        display: none;
+    }
+    .container-k .content .right-side {
+        width: 100%;
+        margin-left: 0;
+    }
+}

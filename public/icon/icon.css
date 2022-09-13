@@ -1,0 +1,83 @@
+/* =========================
+    Iconmoon Icons Start 
+=========================== */
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('fonts/icomoon.eot?k77sl1');
+    src: url('fonts/icomoon.eot?k77sl1#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?k77sl1') format('truetype'),
+        url('fonts/icomoon.woff?k77sl1') format('woff'),
+        url('fonts/icomoon.svg?k77sl1#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    /* speak: never; */
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-address-book1:before {
+    content: "\e900";
+}
+
+.icon-address-card:before {
+    content: "\e901";
+}
+
+.icon-adjust:before {
+    content: "\e902";
+}
+
+.icon-angle-double-down:before {
+    content: "\e903";
+}
+
+.icon-angle-double-left:before {
+    content: "\e904";
+}
+
+.icon-angle-double-right:before {
+    content: "\e905";
+}
+
+.icon-angle-double-up:before {
+    content: "\e906";
+}
+
+.icon-angle-down:before {
+    content: "\e907";
+}
+
+.icon-angle-left:before {
+    content: "\e908";
+}
+
+.icon-angle-right:before {
+    content: "\e909";
+}
+
+.icon-angle-up:before {
+    content: "\e90a";
+}
+
+.icon-bars:before {
+    content: "\e90b";
+}
+
+/* =======================
+    Iconmoon Icons End 
+======================== */
