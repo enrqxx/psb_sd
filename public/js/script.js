@@ -1,63 +1,57 @@
-// scroll top btn
-let scrollTop = document.querySelector('.scroll-top-btn');
+"use strict";
 
-window.addEventListener('scroll', function () {
-    if (window.pageYOffset > 70) {
-        scrollTop.classList.add('active');
+/**
+ * add event on element
+ */
+
+const addEventOnElem = function (elem, type, callback) {
+    if (elem.length > 1) {
+        for (let i = 0; i < elem.length; i++) {
+            elem[i].addEventListener(type, callback);
+        }
     } else {
-        scrollTop.classList.remove('active');
+        elem.addEventListener(type, callback);
     }
-});
+};
 
-// menu toggle bar
-let navToggler = document.querySelector('.nav-toggler');
-let menuItems = document.querySelector('.menu-items');
+/**
+ * navbar toggle
+ */
 
-let navList = document.querySelectorAll('.menu-items > li > a');
+const navbar = document.querySelector("[data-navbar]");
+const navTogglers = document.querySelectorAll("[data-nav-toggler]");
+const navLinks = document.querySelectorAll("[data-nav-link]");
+const overlay = document.querySelector("[data-overlay]");
 
-navToggler.addEventListener('click', function () {
-    navToggler.classList.toggle('active');
-    menuItems.classList.toggle('show');
+const toggleNavbar = function () {
+    navbar.classList.toggle("active");
+    overlay.classList.toggle("active");
+};
 
-    for (let i = 0; i < navList.length; i++) {
-        navList[i].addEventListener('click', function () {
-            navToggler.classList.remove('active');
-            menuItems.classList.remove('show');
-        });
+addEventOnElem(navTogglers, "click", toggleNavbar);
+
+const closeNavbar = function () {
+    navbar.classList.remove("active");
+    overlay.classList.remove("active");
+};
+
+addEventOnElem(navLinks, "click", closeNavbar);
+
+/**
+ * header active when scroll down to 100px
+ */
+
+const header = document.querySelector("[data-header]");
+const backTopBtn = document.querySelector("[data-back-top-btn]");
+
+const activeElem = function () {
+    if (window.scrollY > 100) {
+        header.classList.add("active");
+        backTopBtn.classList.add("active");
+    } else {
+        header.classList.remove("active");
+        backTopBtn.classList.remove("active");
     }
-});
+};
 
-// aos animation
-AOS.init({
-    duration: 1000,
-});
-
-document.querySelectorAll('img')
-    .forEach((img) =>
-        img.addEventListener('load', () =>
-            AOS.refresh()
-        )
-    );
-
-
-// Google Maps
-function initMap() {
-    const myLatLng = {
-        lat: 22.2734719,
-        lng: 70.7512559
-    };
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 5,
-        center: myLatLng,
-    });
-
-    new google.maps.Marker({
-        position: myLatLng,
-        map,
-        title: "Hello Rajkot!",
-    });
-}
-
-window.initMap = initMap;
-
-window.initMap = initMap;
+addEventOnElem(window, "scroll", activeElem);

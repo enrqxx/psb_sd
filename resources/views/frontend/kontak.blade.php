@@ -1,39 +1,46 @@
 @extends('layouts.main')
 @section('container')
 
-<br>
-<br>
+<section class="section hero has-bg-image" id="home" aria-label="home"
+    style="background-image: url('./img/hero-bg.svg')">
+    <div class="container">
 
-        <div class="container-k">
-            <div class="content">
-                <div class="left-side">
-                    <div class="address details">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div class="topic">Address</div>
-                        <div class="text-one">Jawa Barat, Margacinta</div>
-                        <div class="text-two">Cijulang, Pangandaran</div>
-                    </div>
-                    <div class="phone details">
-                        <i class="fas fa-phone-alt"></i>
-                        <div class="topic">Phone</div>
-                        <div class="text-one">+62xxxxxxx</div>
-                    </div>
-                    <div class="email details">
-                        <i class="fas fa-envelope"></i>
-                        <div class="topic">Email</div>
-                        <div class="text-one">annahar@nahar.com</div>
-                    </div>
-                </div>
-                <div class="right-side">
-                        <div id="map"></div>
-                    <div class="topic-text">Send us a message</div>
-                    <p>If you have any work from me or any types of quries related to my tutorial, you can send me message
-                        from here. It's my pleasure to help you.</p>
+        <div class="about-content">
 
-                </div>
-            </div>
+            <p class="section-subtitle">Kontak Sekolah Dasar SDIT An-Nahar</p>
+
+
+            <ul class="about-list">
+                <p class="section-text"><i class="uil uil-map-marker-alt"></i>Alamat Lengkap SDIT An-Nahar</p>
+                <li class="about-item">
+                    <span class="span">Desa Margacinta, Kecamatan Cijulang, Kabupaten Pangandaran, RT 05 RW 02</span>
+                </li>
+
+
+
         </div>
 
-<br>
-<br>
+
+        <figure class="about-banner">
+
+            <div class="img-holder" style="--width: 520; --height: 370;">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15815.058089438153!2d108.4913233!3d-7.7083986!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xca212cca70b16d63!2sSDIT%20AN-NAHAR%20PANGANDARAN!5e0!3m2!1sid!2sid!4v1669895671839!5m2!1sid!2sid"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+
+            <img src="./img/nomer-telp.svg" width="380" height="190" alt="" class="shape hero-shape-1">
+
+            <img src="./img/about-shape-3.png" width="722" height="528" loading="lazy" alt=""
+                class="shape about-shape-3">
+
+        </figure>
+
+    </div>
+</section>
+
+
+
+
 @endsection

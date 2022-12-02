@@ -24,7 +24,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [depanController::class, 'halamanDepan']);
 Route::get('/tentangsekolah', [depanController::class, 'tentangSekolah']);
 Route::get('/kontak', [depanController::class, 'kontak']);
-Route::get('/tutorial', [depanController::class, 'tutorial']);
+Route::get('/pendaftaran', [depanController::class, 'pendaftaran']);
 Route::get('/sKeterima', [depanController::class, 'sKeterima']);
 Route::get('/detail', [depanController::class, 'detail']);
 
@@ -36,9 +36,15 @@ Route::get('/daftarsiswa', [PendaftaranSiswaController::class, 'index']);
 Route::get('/daftar-nonaktif', [PendaftaranSiswaController::class, 'daftarNonaktif']);
 Route::post('/add_siswa', [PendaftaranSiswaController::class, 'addData']);
 
+// Slider
+Route::get('sliders', [SliderController::class,'index'])->name('sliders');
+
 Auth::routes([
     'register' => false,
 ]);
+
+// Videos
+
 
 /*------------------------------------------
 --------------------------------------------

@@ -1,496 +1,472 @@
-  @extends('layouts.mainBE')
-  @section('css')
-      <style type="text/css">
-          hr {
-              margin-top: 1rem;
-              margin-bottom: 1rem;
-              border: 0;
-              border-top: 1px solid rgba(0, 0, 0, 0.1);
-          }
-      </style>
-  @stop
-  @section('isi')
-      <div class="container-fluid">
+@extends('layouts.mainBE')
+@section('css')
+<style type="text/css">
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+</style>
+@stop
+@section('isi')
+<div class="container-fluid">
 
-          <!-- start page title -->
-          <div class="row">
-              <div class="col-12">
-                  <div class="page-title-box">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
 
-                      <h4 class="page-title">{{ $title }}</h4>
-                  </div>
-              </div>
-          </div>
-          <!-- end page title -->
+                <h4 class="page-title">{{ $title }}</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
 
-          <div class="row">
-              <div class="col-12">
-                  <div class="card">
-                      <div class="card-body">
-                          @if (session('pesan'))
-                              <div class="col-sm-12">
-                                  <div class="alert alert-success alert-dismissible" role="alert">
-                                      <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                          aria-label="Close"></button>
-                                      <strong>Success - </strong> {{ session('pesan') }}!
-                                  </div>
-                              @elseif (session('hapus'))
-                                  <div class="col-sm-12">
-                                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                          <strong>{{ session('hapus') }}</strong>.
-                                          <button type="button" class="close" data-dismiss="alert"
-                                              aria-label="Close"><span aria-hidden="true">×</span></button>
-                                      </div>
-                                  </div>
-                              @elseif(count($errors) > 0)
-                                  <div class="col-sm-12">
-                                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                          <strong>
-                                              @foreach ($errors->all() as $error)
-                                                  {{ $error }}
-                                              @endforeach
-                                          </strong>
-                                          <button type="button" class="close" data-dismiss="alert"
-                                              aria-label="Close"><span aria-hidden="true">×</span></button>
-                                      </div>
-                                  </div>
-                          @endif
-                          <table id="mytable" class="table dt-responsive nowrap scroll-vertical scroll-horizontal">
-                              <thead>
-                                  <tr>
-                                      <th>No</th>
-                                      <th></th>
-                                      <th>Nama Siswa</th>
-                                      <th>Informasi</th>
-                                      <th>Action</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                              </tbody>
-                          </table>
-                      </div> <!-- end preview-->
-                  </div> <!-- end preview-->
-              </div> <!-- end preview-->
-          </div> <!-- end preview-->
-      </div> <!-- end preview-->
-  @stop
-  @section('modal')
-      <div class="modal fade" id="detail-ortu" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title" id="myLargeModalLabel">Data Orang Tua</h4>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                  </div>
-                  <div class="modal-body">
-                      <form id="data_ortu" enctype="multipart/form-data" method="POST">
-                          {{ csrf_field() }}
-                          <input type="hidden" class="form-control" id="nik" name="nik">
-                          <div class="row g-2">
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputCity" class="form-label">Nama Ayah </label>
-                                  <input type="text" class="form-control" id="inputCity" name="nama_ayah">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputState" class="form-label">Tempat Lahir Ayah</label>
-                                  <input type="text" class="form-control" id="inputZip" name="tempat_lahir_ayah">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Tanggal Lahir Ayah</label>
-                                  <input type="date" class="form-control" id="inputZip" name="tanggal_lahir_ayah">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="floatingSelectGrid" class="form-label">Pendidikan Ayah</label>
-                                  <select class="form-select" name="id_pendidikan_ayah" id="id_pendidikan_ayah" required>
-                                      @foreach ($pend as $p)
-                                          <option value="{{ $p->id }}">
-                                              {{ $p->nama_pendidikan }}</option>
-                                      @endforeach
-                                  </select>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Perkejaan Ayah</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="pekerjaan_ayah">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Nomor Telepon Ayah</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="no_telp_ayah">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Nama Instansi Ayah Berkerja</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="instansi_ayah">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Alamat Pekerjaan Ayah</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="alamat_kerja_ayah">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Penghasilan Ayah Per Bulan</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="penghasilan_ayah">
-                              </div>
-                          </div>
-                          <hr>
-                          <div class="row g-2">
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputCity" class="form-label">Nama Ibu </label>
-                                  <input type="text" class="form-control" id="inputCity" name="nama_ibu">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputState" class="form-label">Tempat Lahir Ibu</label>
-                                  <input type="text" class="form-control" id="inputZip" name="tempat_lahir_ibu">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Tanggal Lahir Ibu</label>
-                                  <input type="date" class="form-control" id="inputZip" name="tanggal_lahir_ibu">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="floatingSelectGrid" class="form-label">Pendidikan Ibu</label>
-                                  <select class="form-select" name="id_pendidikan_ibu" id="id_pendidikan_ibu" required>
-                                      @foreach ($pend as $p)
-                                          <option value="{{ $p->id }}">
-                                              {{ $p->nama_pendidikan }}</option>
-                                      @endforeach
-                                  </select>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    @if (session('pesan'))
+                    <div class="col-sm-12">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <strong>Success - </strong> {{ session('pesan') }}!
+                        </div>
+                        @elseif (session('hapus'))
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{{ session('hapus') }}</strong>.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
+                            </div>
+                        </div>
+                        @elseif(count($errors) > 0)
+                        <div class="col-sm-12">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>
+                                    @foreach ($errors->all() as $error)
+                                    {{ $error }}
+                                    @endforeach
+                                </strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">×</span></button>
+                            </div>
+                        </div>
+                        @endif
+                        <table id="mytable" class="table dt-responsive nowrap scroll-vertical scroll-horizontal">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th></th>
+                                    <th>Nama Siswa</th>
+                                    <th>Informasi</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div> <!-- end preview-->
+                </div> <!-- end preview-->
+            </div> <!-- end preview-->
+        </div> <!-- end preview-->
+    </div> <!-- end preview-->
+    @stop
+    @section('modal')
+    <div class="modal fade" id="detail-ortu" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Data Orang Tua</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="data_ortu" enctype="multipart/form-data" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" class="form-control" id="nik" name="nik">
+                        <div class="row g-2">
+                            <div class="mb-3 col-md-4">
+                                <label for="inputCity" class="form-label">Nama Ayah </label>
+                                <input type="text" class="form-control" id="inputCity" name="nama_ayah">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputState" class="form-label">Tempat Lahir Ayah</label>
+                                <input type="text" class="form-control" id="inputZip" name="tempat_lahir_ayah">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Tanggal Lahir Ayah</label>
+                                <input type="date" class="form-control" id="inputZip" name="tanggal_lahir_ayah">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="floatingSelectGrid" class="form-label">Pendidikan Ayah</label>
+                                <select class="form-select" name="id_pendidikan_ayah" id="id_pendidikan_ayah" required>
+                                    @foreach ($pend as $p)
+                                    <option value="{{ $p->id }}">
+                                        {{ $p->nama_pendidikan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Perkejaan Ayah</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="pekerjaan_ayah">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Nomor Telepon Ayah</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="no_telp_ayah">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Nama Instansi Ayah Berkerja</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="instansi_ayah">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Alamat Pekerjaan Ayah</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="alamat_kerja_ayah">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Penghasilan Ayah Per Bulan</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="penghasilan_ayah">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row g-2">
+                            <div class="mb-3 col-md-4">
+                                <label for="inputCity" class="form-label">Nama Ibu </label>
+                                <input type="text" class="form-control" id="inputCity" name="nama_ibu">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputState" class="form-label">Tempat Lahir Ibu</label>
+                                <input type="text" class="form-control" id="inputZip" name="tempat_lahir_ibu">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Tanggal Lahir Ibu</label>
+                                <input type="date" class="form-control" id="inputZip" name="tanggal_lahir_ibu">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="floatingSelectGrid" class="form-label">Pendidikan Ibu</label>
+                                <select class="form-select" name="id_pendidikan_ibu" id="id_pendidikan_ibu" required>
+                                    @foreach ($pend as $p)
+                                    <option value="{{ $p->id }}">
+                                        {{ $p->nama_pendidikan }}</option>
+                                    @endforeach
+                                </select>
 
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Perkejaan Ibu</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="pekerjaan_ibu">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Nomor Telepon Ibu</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="no_tlp_ibu">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Nama Instansi Ibu Berkerja</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="instansi_kerja_ibu">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Alamat Pekerjaan Ibu</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="alamat_kerja_ibu">
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Penghasilan Ibu Per Bulan</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="penghasilan_ibu">
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-success">Update</button>
-                          </div>
-                      </form>
-                  </div>
-              </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      <div class="modal fade" id="detail-wali" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title" id="myLargeModalLabel">Data Wali</h4>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                  </div>
-                  <div class="modal-body">
-                      <form id="data_wali" enctype="multipart/form-data" method="POST">
-                          {{ csrf_field() }}
-                          <input type="hidden" class="form-control" id="nik" name="nik">
-                          <div class="row g-2">
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputCity" class="form-label">Nama Wali Murid </label>
-                                  <input type="text" class="form-control" id="inputCity" name="nama_wali_murid"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputState" class="form-label">Tempat Lahir Wali Murid</label>
-                                  <input type="text" class="form-control" id="inputZip" name="tempat_lahir_wali"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Tanggal Lahir Wali Murid</label>
-                                  <input type="date" class="form-control" id="inputZip" name="tgl_lahir_wali"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="floatingSelectGrid" class="form-label">Pendidikan Wali Murid</label>
-                                  <select class="form-select" name="id_pendidikan_wali" id="id_pendidikan_wali" required>
-                                      @foreach ($pend as $p)
-                                          <option value="{{ $p->id }}">
-                                              {{ $p->nama_pendidikan }}</option>
-                                      @endforeach
-                                  </select>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Perkejaan Wali Murid</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="pekerjaan_wali" required>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Nomor Telepon Wali Murid</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="no_tlp_wali"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Nama Instansi Wali Murid Berkerja</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="instansi_kerja_wali" required>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Alamat Pekerjaan Wali Murid</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="alamat_kerja_wali" required>
-                              </div>
-                              <div class="mb-3 col-md-4">
-                                  <label for="inputZip" class="form-label">Penghasilan Wali Murid Per Bulan</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="penghasilan_wali" required>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-success">Update</button>
-                          </div>
-                      </form>
-                  </div>
-              </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      <div id="detail-pribadi" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog modal-full-width">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title" id="fullWidthModalLabel">Modal Heading</h4>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                  </div>
-                  <div class="modal-body">
-                      <form id="data_pribadi" enctype="multipart/form-data" method="POST">
-                          {{ csrf_field() }}
-                          <div class="row g-2">
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputCity" class="form-label">NIK</label>
-                                  <input type="hidden" class="form-control" id="id_data_siswa" name="id_data_siswa">
-                                  <input type="text" class="form-control" id="inputCity" name="nik" required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputState" class="form-label">Nama Lengkap</label>
-                                  <input type="text" class="form-control" id="inputZip" name="nama_lengkap"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Jenis Kelamin</label>
-                                  <select class="form-select" name="jk" id="jk" required>
-                                      @foreach ($jk as $j)
-                                          <option value="{{ $j->id }}">
-                                              {{ $j->jenis_kelamin }}</option>
-                                      @endforeach
-                                  </select>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Perkejaan Ibu</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="pekerjaan_ibu">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Nomor Telepon Ibu</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="no_tlp_ibu">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Nama Instansi Ibu Berkerja</label>
+                                <input type="text" id="example-fileinput" class="form-control"
+                                    name="instansi_kerja_ibu">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Alamat Pekerjaan Ibu</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="alamat_kerja_ibu">
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Penghasilan Ibu Per Bulan</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="penghasilan_ibu">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" id="detail-wali" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Data Wali</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="data_wali" enctype="multipart/form-data" method="POST">
+                        {{ csrf_field() }}
+                        <input type="hidden" class="form-control" id="nik" name="nik">
+                        <div class="row g-2">
+                            <div class="mb-3 col-md-4">
+                                <label for="inputCity" class="form-label">Nama Wali Murid </label>
+                                <input type="text" class="form-control" id="inputCity" name="nama_wali_murid" required>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputState" class="form-label">Tempat Lahir Wali Murid</label>
+                                <input type="text" class="form-control" id="inputZip" name="tempat_lahir_wali" required>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Tanggal Lahir Wali Murid</label>
+                                <input type="date" class="form-control" id="inputZip" name="tgl_lahir_wali" required>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="floatingSelectGrid" class="form-label">Pendidikan Wali Murid</label>
+                                <select class="form-select" name="id_pendidikan_wali" id="id_pendidikan_wali" required>
+                                    @foreach ($pend as $p)
+                                    <option value="{{ $p->id }}">
+                                        {{ $p->nama_pendidikan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Perkejaan Wali Murid</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="pekerjaan_wali"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Nomor Telepon Wali Murid</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="no_tlp_wali"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Nama Instansi Wali Murid Berkerja</label>
+                                <input type="text" id="example-fileinput" class="form-control"
+                                    name="instansi_kerja_wali" required>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Alamat Pekerjaan Wali Murid</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="alamat_kerja_wali"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-4">
+                                <label for="inputZip" class="form-label">Penghasilan Wali Murid Per Bulan</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="penghasilan_wali"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="detail-pribadi" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-full-width">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="fullWidthModalLabel">Modal Heading</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="data_pribadi" enctype="multipart/form-data" method="POST">
+                        {{ csrf_field() }}
+                        <div class="row g-2">
+                            <div class="mb-3 col-md-2">
+                                <label for="inputCity" class="form-label">NIK</label>
+                                <input type="hidden" class="form-control" id="id_data_siswa" name="id_data_siswa">
+                                <input type="text" class="form-control" id="inputCity" name="nik" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputState" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="inputZip" name="nama_lengkap" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Jenis Kelamin</label>
+                                <select class="form-select" name="jk" id="jk" required>
+                                    @foreach ($jk as $j)
+                                    <option value="{{ $j->id }}">
+                                        {{ $j->jenis_kelamin }}</option>
+                                    @endforeach
+                                </select>
 
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="floatingSelectGrid" class="form-label">Tempat Lahir</label>
-                                  <input type="text" class="form-control" id="inputZip" name="tempat_lahir"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Tanggal Lahir</label>
-                                  <input type="date" id="example-fileinput" class="form-control" name="tanggal_lahir"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Agama</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="agama"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Kewarganegaraan</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="kewarganegaraan" required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Anak Ke-</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="anak_ke"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Bahasa Sehari-Hari</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="bahasa_sehari"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Alamat Tempat Tinggal</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="alamat_tempat_tinggal" required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">RT</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="rt"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">RW</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="rw"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Dusun</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="dusun"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Desa</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="desa"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Kecamatan</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="kecamatan"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Kabupaten</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="kab"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Provinsi</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="prov"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Kode Pos</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="kode_pos"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Ket Tinggal</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="ket_tinggal"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Saudara Kandung</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="brp_saudara"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Jumlah Saudara</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="jml_saudara"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Golongan Darah</label>
-                                  <select class="form-select" name="id_goldar" id="id_goldar" required>
-                                      @foreach ($goldar as $g)
-                                          <option value="{{ $g->id_goldar }}">
-                                              {{ $g->goldar }}</option>
-                                      @endforeach
-                                  </select>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Berat Badan</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="bb"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Tinggi Badan</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="tb"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Riwayat Penyakit</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="riwayat_penyakit" required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Kelainan Jasmani</label>
-                                  <input type="text" id="example-fileinput" class="form-control"
-                                      name="kelainan_jasmani" required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Alergi</label>
-                                  <input type="text" id="example-fileinput" class="form-control" name="alergi"
-                                      required>
-                              </div>
-                              <div class="mb-3 col-md-3">
-                                  <label for="inputZip" class="form-label">Foto</label>
-                                  <input type="file" id="foto" class="form-control" name="foto">
-                              </div>
-                          </div>
-                          <hr>
-                          <div class="row g-2">
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputCity" class="form-label">No. WA Ortu/Wali</label>
-                                  <input type="text" class="form-control" id="inputCity" name="no_wa" required>
-                              </div>
-                              <div class="mb-3 col-md-3">
-                                  <label for="inputState" class="form-label">Email Ortu</label>
-                                  <input type="text" class="form-control" id="inputZip" name="email_ortu" required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Jarak Ke Sekolah</label>
-                                  <input type="text" class="form-control" id="inputZip" name="jarak" required>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Transportasi Ke Sekolah</label>
-                                  <select class="form-select" name="id_jenis_transport" id="id_jenis_transport" required>
-                                      @foreach ($trans as $tr)
-                                          <option value="{{ $tr->id_jenis_transportasi }}">
-                                              {{ $tr->nama_transportasi }}</option>
-                                      @endforeach
-                                  </select>
-                              </div>
-                              <div class="mb-3 col-md-2">
-                                  <label for="inputZip" class="form-label">Hobi Anak</label>
-                                  <input type="text" class="form-control" id="inputZip" name="hobi_anak" required>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-success">Update</button>
-                          </div>
-                      </form>
-                  </div>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="floatingSelectGrid" class="form-label">Tempat Lahir</label>
+                                <input type="text" class="form-control" id="inputZip" name="tempat_lahir" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Tanggal Lahir</label>
+                                <input type="date" id="example-fileinput" class="form-control" name="tanggal_lahir"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Agama</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="agama" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Kewarganegaraan</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="kewarganegaraan"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Anak Ke-</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="anak_ke" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Bahasa Sehari-Hari</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="bahasa_sehari"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Alamat Tempat Tinggal</label>
+                                <input type="text" id="example-fileinput" class="form-control"
+                                    name="alamat_tempat_tinggal" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">RT</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="rt" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">RW</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="rw" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Dusun</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="dusun" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Desa</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="desa" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Kecamatan</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="kecamatan"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Kabupaten</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="kab" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Provinsi</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="prov" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Kode Pos</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="kode_pos" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Ket Tinggal</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="ket_tinggal"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Saudara Kandung</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="brp_saudara"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Jumlah Saudara</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="jml_saudara"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Golongan Darah</label>
+                                <select class="form-select" name="id_goldar" id="id_goldar" required>
+                                    @foreach ($goldar as $g)
+                                    <option value="{{ $g->id_goldar }}">
+                                        {{ $g->goldar }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Berat Badan</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="bb" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Tinggi Badan</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="tb" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Riwayat Penyakit</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="riwayat_penyakit"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Kelainan Jasmani</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="kelainan_jasmani"
+                                    required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Alergi</label>
+                                <input type="text" id="example-fileinput" class="form-control" name="alergi" required>
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label for="inputZip" class="form-label">Foto</label>
+                                <input type="file" id="foto" class="form-control" name="foto">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row g-2">
+                            <div class="mb-3 col-md-2">
+                                <label for="inputCity" class="form-label">No. WA Ortu/Wali</label>
+                                <input type="text" class="form-control" id="inputCity" name="no_wa" required>
+                            </div>
+                            <div class="mb-3 col-md-3">
+                                <label for="inputState" class="form-label">Email Ortu</label>
+                                <input type="text" class="form-control" id="inputZip" name="email_ortu" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Jarak Ke Sekolah</label>
+                                <input type="text" class="form-control" id="inputZip" name="jarak" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Transportasi Ke Sekolah</label>
+                                <select class="form-select" name="id_jenis_transport" id="id_jenis_transport" required>
+                                    @foreach ($trans as $tr)
+                                    <option value="{{ $tr->id_jenis_transportasi }}">
+                                        {{ $tr->nama_transportasi }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="inputZip" class="form-label">Hobi Anak</label>
+                                <input type="text" class="form-control" id="inputZip" name="hobi_anak" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                    </form>
+                </div>
 
-              </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      {{-- Modal Terima --}}
-      <div id="diterima-di" class="modal fade" tabindex="-1" role="dialog"
-          aria-labelledby="success-header-modalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header modal-colored-header bg-success">
-                      <h4 class="modal-title" id="success-header-modalLabel">Terima Siswa</h4>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                  </div>
-                  <form id="form-terima" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                      <div class="modal-body">
-                          <label for="inputCity" class="form-label">Di Terima Di Kelas: </label>
-                          <input type="hidden" class="form-control" id="id_data_siswa" name="id_data_siswa">
-                          <input type="hidden" class="form-control" id="status" name="status" value="1">
-                          <input type="text" class="form-control" id="inputCity" name="diterima_di" required>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-success">Simpan</button>
-                      </div>
-                  </form>
-              </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-  @stop
-  @section('js')
-      <script type="text/javascript">
-          let list_siswa = [];
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    {{-- Modal Terima --}}
+    <div id="diterima-di" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="success-header-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-success">
+                    <h4 class="modal-title" id="success-header-modalLabel">Terima Siswa</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <form id="form-terima" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <label for="inputCity" class="form-label">Di Terima Di Kelas: </label>
+                        <input type="hidden" class="form-control" id="id_data_siswa" name="id_data_siswa">
+                        <input type="hidden" class="form-control" id="status" name="status" value="1">
+                        <input type="text" class="form-control" id="inputCity" name="diterima_di" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    @stop
+    @section('js')
+    <script type="text/javascript">
+        let list_siswa = [];
 
           const table = $("#mytable").DataTable({
               "pageLength": 10,
@@ -838,5 +814,5 @@
                   })
               }
           }
-      </script>
-  @stop
+    </script>
+    @stop

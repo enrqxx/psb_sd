@@ -10,14 +10,14 @@
             <div class="footer-col">
                 <h4>Hubungi Kami</h4>
                 <p>
-                    Margacinta, Cijulang, Pangandaran 
+                    Margacinta, Cijulang, Pangandaran
                     <i class="ri-map-pin-4-fill"></i>
                 </p>
             </div>
             <div class="footer-col">
                 <h4>Informasi</h4>
                 <ul>
-                    <li><a href="/about">Tentang</a></li>
+                    <li><a href="/tentangsekolah">Tentang</a></li>
                     <li><a href="#">Kegiatan Sekolah</a></li>
                     <li><a href="/program">Program Sekolah</a></li>
                     <li><a href="#">Ekstrakulikuler</a></li>

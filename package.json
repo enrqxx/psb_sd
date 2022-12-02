@@ -15,6 +15,12 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
-        "jquery": "^3.6.1"
+        "@mui/material": "^5.10.8",
+        "@mui/styled-engine-sc": "^5.10.6",
+        "@types/aos": "^3.0.4",
+        "aos": "^3.0.0-beta.6",
+        "jquery": "^3.6.1",
+        "styled-components": "^5.3.6",
+        "swiper": "^8.4.3"
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\M_datasiswa;
 use Illuminate\Http\Request;
 use App\Models\M_pendaftaran;
+use BenSampo\Embed\Rules\EmbeddableUrl;
 
 class depanController extends Controller
 {
@@ -42,7 +43,7 @@ class depanController extends Controller
         return view('frontend.kontak', $data);
     }
 
-    public function tutorial()
+    public function pendaftaran()
     {
         $daftar = M_pendaftaran::getDaftar();
         $data = [
@@ -50,7 +51,7 @@ class depanController extends Controller
             'tampil' => $daftar->tampil,
             "status" => $daftar->active
         ];
-        return view('frontend.tutorial', $data);
+        return view('frontend.pendaftaran', $data);
     }
 
     public function sKeterima()
@@ -66,4 +67,15 @@ class depanController extends Controller
         return view('frontend.sKeterima', $data);
         // dd($all);
     }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'url' => ['required', new EmbeddableUrl],
+        ]);
+    }
+
+    
+
+
 }
