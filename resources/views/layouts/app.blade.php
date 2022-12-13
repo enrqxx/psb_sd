@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/js/app.js', 'public/scss/style.scss'])
 </head>
 
 <body>

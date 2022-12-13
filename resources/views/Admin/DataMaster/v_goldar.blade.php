@@ -95,6 +95,35 @@
              </div><!-- /.modal-content -->
          </div><!-- /.modal-dialog -->
      </div><!-- /.modal -->
+     <!-- Success Alert Modal -->
+     <div id="success-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+         <div class="modal-dialog modal-sm">
+             <div class="modal-content modal-filled bg-success">
+                 <div class="modal-body p-4">
+                     <div class="text-center">
+                         <i class="dripicons-checkmark h1"></i>
+                         <h4 class="mt-2">Success!</h4>
+                         <p class="mt-3">Data Tersimpan.</p>
+                         <button type="button" class="btn btn-light my-2" data-bs-dismiss="modal">Continue</button>
+                     </div>
+                 </div>
+             </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+     </div><!-- /.modal -->
+     <div id="danger-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+         <div class="modal-dialog modal-sm">
+             <div class="modal-content modal-filled bg-danger">
+                 <div class="modal-body p-4">
+                     <div class="text-center">
+                         <i class="dripicons-wrong h1"></i>
+                         <h4 class="mt-2">Oh snap!</h4>
+                         <p class="mt-3">Something Wrong :(</p>
+                         <button type="button" class="btn btn-light my-2" data-bs-dismiss="modal">Continue</button>
+                     </div>
+                 </div>
+             </div><!-- /.modal-content -->
+         </div><!-- /.modal-dialog -->
+     </div><!-- /.modal -->
  @stop
  @section('js')
      <script type="text/javascript">
@@ -177,12 +206,13 @@
                  data: form.serialize(),
                  success: function(response) {
                      if (response === true) {
+                         $('#tambah-data').modal('hide');
                          table.ajax.reload(null, false)
-                         alert('Berhasil!')
+                         $('#success-alert-modal').modal('show')
                      }
                  },
                  error: function(e) {
-                     alert('Something wrong!')
+                     $('#danger-alert-modal').modal('show')
                  }
              })
          }
@@ -196,12 +226,13 @@
                  data: form.serialize(),
                  success: function(response) {
                      if (response === true) {
+                         $('#edit-data').modal('hide');
                          table.ajax.reload(null, false)
-                         alert('Berhasil!')
+                         $('#success-alert-modal').modal('show')
                      }
                  },
                  error: function(e) {
-                     alert('Something wrong!')
+                     $('#danger-alert-modal').modal('show')
                  }
              })
          }
@@ -217,8 +248,9 @@
                      },
                      success: function(response) {
                          if (response === true) {
+                             $('#tambah-data').modal('hide');
                              table.ajax.reload(null, false)
-                             alert('Berhasil Menghapus!')
+                             $('#success-alert-modal').modal('show')
                          }
                      },
                      error: function(e) {

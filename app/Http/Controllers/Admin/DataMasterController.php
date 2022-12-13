@@ -133,7 +133,7 @@ class DataMasterController extends Controller
     public function tambahGoldar(Request $request)
     {
         $this->validate($request, [
-            'goldar'  => ['required', 'min:2', 'unique:ref_gol_darah'],
+            'goldar'  => ['required', 'unique:ref_gol_darah'],
         ]);
         $goldar = [
             'goldar' => request()->get('goldar')
@@ -145,7 +145,7 @@ class DataMasterController extends Controller
     public function editGoldar(Request $request)
     {
         $this->validate($request, [
-            'goldar'  => ['required', 'min:2', 'unique:ref_gol_darah'],
+            'goldar'  => ['required'],
         ]);
         DB::table('ref_gol_darah')->where('id_goldar', request()->get('id_goldar'))
             ->update(request()->only(['goldar']));

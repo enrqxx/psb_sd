@@ -24,7 +24,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $daftar = M_pendaftaran::getDaftar();
+        $count = M_pendaftaran::hitungPendaftar();
+        // dd($daftar->tampil);
+        $data = [
+            "title" => "Informasi Pendaftaran",
+            "status" => $daftar->active,
+            'nama' => $daftar->nama,
+            "id" => $daftar->id_daftar,
+            'tampil' => $daftar->tampil,
+            'ket' => $daftar->ket,
+            'jml' => $count,
+        ];
+        return view('adminHome', $data);
     }
 
     /**
@@ -44,7 +56,7 @@ class HomeController extends Controller
             "id" => $daftar->id_daftar,
             'tampil' => $daftar->tampil,
             'ket' => $daftar->ket,
-            'jml' => $count
+            'jml' => $count,
         ];
         return view('adminHome', $data);
     }
