@@ -158,7 +158,7 @@ class masterDataController extends Controller
             'goldar' => M_jk::getGoldar(),
             'detail' => M_datasiswa::detail($id_data_siswa)
         ];
-        return view('Admin/v_detailSiswa', $data);
+        return view('Admin.v_detailSiswa', $data);
         // dd($data['detail']);
     }
     public function updateWali(Request $request)
@@ -188,18 +188,7 @@ class masterDataController extends Controller
 
     public function updatePribadi(Request $request)
     {
-        // dd($request->file('foto'));
-        $datasiswa = [
-            'nama_lengkap' => Request()->nama_lengkap,
-            'tanggal_lahir' => Request()->tanggal_lahir,
-            'tempat_lahir' => Request()->tempat_lahir,
-            'agama' => Request()->agama,
-            'nik' => Request()->nik,
-            'anak_ke' => Request()->anak_ke,
-            'bahasa_sehari' => Request()->bahasa_sehari,
-            'kewarganegaraan' => Request()->kewarganegaraan,
-            'jk' => Request()->jk,
-        ];
+
         $kontak = [
             'no_wa' => Request()->no_wa,
             'email_ortu' => Request()->email_ortu,
@@ -227,41 +216,33 @@ class masterDataController extends Controller
             'nik_calon_siswa' => Request()->nik,
         ];
 
-        if (empty($request->get('foto'))) {
-            DB::transaction(function () use ($datasiswa, $kontak, $informasi, $jasmani, $request): void {
-                DB::table('datasiswa')->where('id_data_siswa', $request->get('id_data_siswa'))->update($datasiswa);
-                DB::table('ifrmdidikbaru')->where('nik_calon_siswa', $request->get('nik'))->update($informasi);
-                DB::table('jasmani_saba')->where('nik_calon_siswa', $request->get('nik'))->update($jasmani);
-                DB::table('kontak_orang_tua_wali')->where('nik_calon_siswa', $request->get('nik'))->update($kontak);
-            });
-        } else {
-            //Membuat upload Foto dan rapor
-            $file_foto = $request->file('foto');
-            //Membuat penamaan dari waktu dan nama original file
-            $nama_file_foto = time() . "_" . $file_foto->getClientOriginalName();
+        //Membuat upload Foto dan rapor
+        $file_foto = $request->file('foto');
+        //Membuat penamaan dari waktu dan nama original file
+        $nama_file_foto = time() . "_" . $file_foto->getClientOriginalName();
 
-            // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload_foto = 'dok_foto_siswa';
-            $file_foto->move($tujuan_upload_foto, $nama_file_foto);
-            $datasiswa_foto = [
-                'nama_lengkap' => Request()->nama_lengkap,
-                'tanggal_lahir' => Request()->tanggal_lahir,
-                'tempat_lahir' => Request()->tempat_lahir,
-                'agama' => Request()->agama,
-                'nik' => Request()->nik,
-                'anak_ke' => Request()->anak_ke,
-                'bahasa_sehari' => Request()->bahasa_sehari,
-                'kewarganegaraan' => Request()->kewarganegaraan,
-                'jk' => Request()->jk,
-                'foto' => $nama_file_foto,
-            ];
-            DB::transaction(function () use ($datasiswa_foto, $kontak, $informasi, $jasmani, $request): void {
-                DB::table('datasiswa')->where('id_data_siswa', $request->get('id_data_siswa'))->update($datasiswa_foto);
-                DB::table('ifrmdidikbaru')->where('nik_calon_siswa', $request->get('nik'))->update($informasi);
-                DB::table('jasmani_saba')->where('nik_calon_siswa', $request->get('nik'))->update($jasmani);
-                DB::table('kontak_orang_tua_wali')->where('nik_calon_siswa', $request->get('nik'))->update($kontak);
-            });
-        }
+        // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload_foto = 'dok_foto_siswa';
+        $file_foto->move($tujuan_upload_foto, $nama_file_foto);
+        $datasiswa_foto = [
+            'nama_lengkap' => Request()->nama_lengkap,
+            'tanggal_lahir' => Request()->tanggal_lahir,
+            'tempat_lahir' => Request()->tempat_lahir,
+            'agama' => Request()->agama,
+            'nik' => Request()->nik,
+            'anak_ke' => Request()->anak_ke,
+            'bahasa_sehari' => Request()->bahasa_sehari,
+            'kewarganegaraan' => Request()->kewarganegaraan,
+            'jk' => Request()->jk,
+            'foto' => $nama_file_foto,
+        ];
+        DB::transaction(function () use ($datasiswa_foto, $kontak, $informasi, $jasmani, $request): void {
+            DB::table('datasiswa')->where('nik', $request->get('nik'))->update($datasiswa_foto);
+            DB::table('ifrmdidikbaru')->where('nik_calon_siswa', $request->get('nik'))->update($informasi);
+            DB::table('jasmani_saba')->where('nik_calon_siswa', $request->get('nik'))->update($jasmani);
+            DB::table('kontak_orang_tua_wali')->where('nik_calon_siswa', $request->get('nik'))->update($kontak);
+        });
+
         return redirect('/daftar_pendaftar')->with('pesan', 'Data Siswa Berhasil Diupdate.');
     }
 }
